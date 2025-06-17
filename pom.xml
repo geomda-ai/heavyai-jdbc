@@ -24,18 +24,6 @@
     <developerConnection>scm:git:git@github.com:heavyai/heavyai-jdbc.git</developerConnection>
   </scm>
 
-  <developers>
-    <developer>
-      <name>Michael Thomson</name>
-    </developer>
-    <developer>
-      <name>Jack Frampton</name>
-    </developer>
-    <developer>
-      <name>Maxim Smyatkin</name>
-    </developer>
-  </developers>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
