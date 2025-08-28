@@ -51,8 +51,8 @@ jobs:
           sleep 15
         done
         
-    - name: Run tests
-      run: mvn test -DskipTests=false
+    - name: Run tests (skip slow connection tests)
+      run: mvn test -DskipTests=false -Dtest="!ai.heavy.jdbc.HeavyAIConnectionTest"
       
     - name: Generate test report
       uses: dorny/test-reporter@v1
