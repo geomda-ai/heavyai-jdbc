@@ -16,12 +16,6 @@ jobs:
         ports:
           - 6274:6274
           - 6278:6278
-        options: >-
-          --health-cmd "nc -z localhost 6274 || exit 1"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 10
-          --health-start-period 60s
     
     steps:
     - name: Checkout code
@@ -42,15 +36,19 @@ jobs:
         
     - name: Wait for HeavyDB to be ready
       run: |
-        echo "Waiting for HeavyDB JDBC port to be ready..."
-        for i in {1..30}; do
-          if nc -z localhost 6274; then
+        echo "Waiting for HeavyDB to be ready..."
+        sleep 60  # Wait 60 seconds for container to fully start
+        
+        # Test connection with timeout
+        echo "Testing HeavyDB connection..."
+        for i in {1..10}; do
+          if timeout 10s bash -c "</dev/tcp/localhost/6274"; then
             echo "HeavyDB JDBC port 6274 is ready!"
-            sleep 5  # Give it a few more seconds to fully initialize
+            sleep 10  # Give it extra time to fully initialize
             break
           fi
-          echo "Waiting for port 6274... ($i/30)"
-          sleep 10
+          echo "Port not ready, waiting... ($i/10)"
+          sleep 15
         done
         
     - name: Run tests
